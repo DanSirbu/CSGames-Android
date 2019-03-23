@@ -5,10 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.csgames.mixparadise.api.Api
 import com.csgames.mixparadise.api.IngredientsReturnModel
 import com.csgames.mixparadise.extensions.*
+import com.csgames.mixparadise.ingredients.IngredientSelectedListener
 import com.csgames.mixparadise.ingredients.IngredientsBottomSheetDialogFragment
+import com.csgames.mixparadise.ingredients.MyAdapter
 import kotlinx.android.synthetic.main.view_blender_with_table.*
 import com.csgames.mixparadise.result.ResultDialogFragment
 import retrofit2.Call
@@ -57,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         }) {
             showResultDialog()
         }
-
         setupListeners(blender, ingredientsDialog)
     }
 
