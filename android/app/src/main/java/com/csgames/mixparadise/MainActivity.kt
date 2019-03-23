@@ -24,16 +24,12 @@ class MainActivity : AppCompatActivity() {
     private val resultDialog = ResultDialogFragment()
     private lateinit var blender: Blender
 
-
-
-
-    private lateinit  var ingredientsView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_main)
+        setupWaveView()
+        setupStackView()
+        setupSolidIngredientsWrapper()
 
         blender = Blender(wave, stackView, solidIngredientsContainer, 10, {
             addIngredientsButton.visibility = View.GONE
@@ -41,29 +37,6 @@ class MainActivity : AppCompatActivity() {
         }) {
             showResultDialog()
         }
-
-
-
-        viewManager = LinearLayoutManager(this)
-        var myDataset = arrayOf("one","two","three")
-        viewAdapter = MyAdapter(myDataset)
-
-        ingredientsView = findViewById<RecyclerView>(R.id.ingredients).apply {
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            setHasFixedSize(true)
-
-            // use a linear layout manager
-            layoutManager = viewManager
-
-            // specify an viewAdapter (see also next example)
-            adapter = viewAdapter
-        }
-        setContentView(R.layout.activity_main)
-        setupWaveView()
-        setupStackView()
-        setupSolidIngredientsWrapper()
-
         setupListeners(blender, ingredientsDialog)
     }
 
