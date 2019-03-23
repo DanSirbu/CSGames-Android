@@ -8,7 +8,7 @@ import retrofit2.http.GET
 interface DrinkService {
     // TODO: get ingredients
 
-    @GET("ingredients")
+    @GET("ingredients?key=asdasdsdsfds")
     fun getIngredients(): Call<IngredientsReturnModel>
 
     // TODO: serve call
