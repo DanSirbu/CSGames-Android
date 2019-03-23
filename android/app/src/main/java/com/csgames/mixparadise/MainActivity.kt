@@ -2,12 +2,17 @@ package com.csgames.mixparadise
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.csgames.mixparadise.api.Api
+import com.csgames.mixparadise.api.IngredientsReturnModel
 import com.csgames.mixparadise.extensions.*
 import com.csgames.mixparadise.ingredients.IngredientsBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.view_blender_with_table.*
 import com.csgames.mixparadise.result.ResultDialogFragment
+import retrofit2.Call
+import retrofit2.Callback
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +31,25 @@ class MainActivity : AppCompatActivity() {
         setupWaveView()
         setupStackView()
         setupSolidIngredientsWrapper()
+
+        Api.drinkService.getIngredients().enqueue(object: Callback<IngredientsReturnModel> {
+            override fun onFailure(call: Call<IngredientsReturnModel>, t: Throwable) {
+                Log.d("ASD", "Failed")
+            }
+
+            override fun onResponse(
+                call: Call<IngredientsReturnModel>,
+                response: retrofit2.Response<IngredientsReturnModel>
+            ) {
+                var tag = "ASD"
+
+                Log.d(tag, "Success: " + response.isSuccessful.toString())
+
+                Log.d(tag, "Message: " + response.message())
+                Log.d(tag, "Obj: " + response.body()?.ingredients)
+            }
+
+        })
 
         blender = Blender(wave, stackView, solidIngredientsContainer, 10, {
             addIngredientsButton.visibility = View.GONE
